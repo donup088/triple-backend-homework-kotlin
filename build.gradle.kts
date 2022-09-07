@@ -30,6 +30,22 @@ dependencies {
 	 */
 	implementation ("org.springframework.boot:spring-boot-starter-validation")
 
+	/**
+	 * Lombok
+	 */
+	compileOnly ("org.projectlombok:lombok")
+	annotationProcessor ("org.projectlombok:lombok")
+
+	testCompileOnly ("org.projectlombok:lombok")
+	testAnnotationProcessor ("org.projectlombok:lombok")
+
+	/**
+	 * JWT Dependencies
+	 */
+	implementation ("io.jsonwebtoken:jjwt-api:0.11.1")
+	runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.1")
+	runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.11.1")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }
