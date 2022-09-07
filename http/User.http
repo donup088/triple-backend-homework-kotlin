@@ -1,0 +1,10 @@
+POST {{apiUrl}}/user
+Content-Type: application/json;charset=UTF-8
+
+{
+  "nickname": "동그라미"
+}
+
+###
+GET {{apiUrl}}/user/91e03fa0-8c1f-46fa-a70e-a4e2ad4532bf/point
+Authorization: {{authorizationToken}}
