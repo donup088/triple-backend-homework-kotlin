@@ -9,7 +9,7 @@ import javax.persistence.*
 @Table(name = "review")
 class Review(
         @Column(name = "content", columnDefinition = "TEXT")
-        private var content: String,
+        private var content: String?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")
         var user: User,
@@ -23,9 +23,9 @@ class Review(
         @Column(name = "review_id")
         val id: Long? = null,
 ) : BaseTimeEntity() {
-    fun update(updatedReview: Review, originReview: Review, reviewValidator: ReviewValidator, loginUser: User) {
+    fun update(content: String, originReview: Review, reviewValidator: ReviewValidator, loginUser: User) {
         reviewValidator.updateValidate(originReview, loginUser)
-        this.content = updatedReview.content
+        this.content = content
     }
 
     fun delete(review: Review, loginUser: User, reviewValidator: ReviewValidator) {
@@ -33,10 +33,10 @@ class Review(
     }
 
     companion object {
-        fun create(review: Review, place: Place, loginUser: User, reviewValidator: ReviewValidator): Review {
+        fun create(content: String, place: Place, loginUser: User, reviewValidator: ReviewValidator): Review {
             reviewValidator.createValidate(place, loginUser)
             return Review(
-                    content = review.content,
+                    content = content,
                     place = place,
                     user = loginUser)
         }

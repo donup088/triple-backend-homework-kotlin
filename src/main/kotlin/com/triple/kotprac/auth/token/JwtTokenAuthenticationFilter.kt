@@ -16,7 +16,7 @@ class JwtTokenAuthenticationFilter(
 ) : OncePerRequestFilter() {
     companion object {
         private const val AUTHORIZATION_HEADER = "Authorization"
-        private const val BEARER = "BEARER"
+        private const val BEARER = "Bearer"
     }
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
@@ -28,7 +28,6 @@ class JwtTokenAuthenticationFilter(
             authenticationToken.details = WebAuthenticationDetailsSource().buildDetails(request)
 
             SecurityContextHolder.getContext().authentication = authenticationToken
-
         }
         filterChain.doFilter(request, response)
     }

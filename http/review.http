@@ -1,0 +1,51 @@
+POST {{apiUrl}}/review
+Authorization: {{authorizationToken}}
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json, image/*
+
+--boundary
+Content-Disposition: form-data; name="info";
+Content-Type: application/json;charset=UTF-8
+
+{
+  "content": "멋져요!",
+  "placeId": 1
+}
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="test.png"
+
+< ../src/main/resources/mock/images/test.jpg
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="test2.png"
+
+< ../src/main/resources/mock/images/test2.jpg
+
+###
+PUT {{apiUrl}}/review/1
+Authorization: {{authorizationToken}}
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json, image/*
+
+--boundary
+Content-Disposition: form-data; name="info";
+Content-Type: application/json;charset=UTF-8
+
+{
+  "content": "1234562",
+  "fileChange": true
+}
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="test.png"
+
+< ../src/main/resources/mock/images/test.jpg
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="test2.png"
+
+< ../src/main/resources/mock/images/test2.jpg
+###
+DELETE {{apiUrl}}/review/1
+Authorization: {{authorizationToken}}

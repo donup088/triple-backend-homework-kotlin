@@ -9,5 +9,5 @@ import org.springframework.data.repository.query.Param
 interface ReviewFileRepository : JpaRepository<ReviewFile, Long> {
     @Modifying(clearAutomatically = true)
     @Query("delete from ReviewFile reviewFile where reviewFile.id in :reviewFileIds")
-    fun deleteAllByIdIn(@Param("reviewFileIds") reviewFileIds: MutableList<Long>)
+    fun deleteAllByIdIn(@Param("reviewFileIds") reviewFileIds: List<Long>)
 }

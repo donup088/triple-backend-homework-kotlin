@@ -46,6 +46,11 @@ dependencies {
 	runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.1")
 	runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.11.1")
 
+	/**
+	 * Aws
+	 */
+	implementation ("org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }

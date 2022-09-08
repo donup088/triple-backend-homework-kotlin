@@ -20,7 +20,7 @@ class UserController(
         private val userService: UserService
 ) {
     @PostMapping
-    fun signup(@RequestBody @Valid request:UserSignupRequest):ResponseEntity<ApiResult<Unit>>{
+    fun signup(@RequestBody @Valid request:UserSignupRequest): ResponseEntity<ApiResult<Unit>>{
         userService.signup(request)
         return ResponseEntity.ok().body(ApiResult.build(HttpStatus.OK.value()))
     }

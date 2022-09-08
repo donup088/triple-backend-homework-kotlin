@@ -9,5 +9,5 @@ interface ReviewRepository : JpaRepository<Review, Long> {
     fun findByPlaceIdAndUserId(placeId: Long, userId: Long): Review?
 
     @Query("select review from Review review left join fetch review.reviewFileList where review.id=:reviewId")
-    fun findByIdWithImage(@Param("reviewId") reviewId: Long)
+    fun findByIdWithImage(@Param("reviewId") reviewId: Long): Review?
 }

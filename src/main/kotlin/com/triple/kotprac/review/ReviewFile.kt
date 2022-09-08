@@ -14,11 +14,11 @@ class ReviewFile(
         @Column(name = "url", nullable = false)
         val url: String,
         @Column(name = "size", nullable = false)
-        val size: String,
+        val size: Long,
         @Column(name = "width")
-        val width: Int,
+        val width: Int?,
         @Column(name = "height")
-        val height: Int,
+        val height: Int?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "review_id")
         var review: Review? = null,
