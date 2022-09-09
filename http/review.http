@@ -9,18 +9,10 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "content": "멋져요!",
-  "placeId": 1
+  "placeId": 1,
+  "userId": 2
 }
 
---boundary
-Content-Disposition: form-data; name="image"; filename="test.png"
-
-< ../src/main/resources/mock/images/test.jpg
-
---boundary
-Content-Disposition: form-data; name="image"; filename="test2.png"
-
-< ../src/main/resources/mock/images/test2.jpg
 
 ###
 PUT {{apiUrl}}/review/1
@@ -34,7 +26,8 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "content": "1234562",
-  "fileChange": true
+  "fileChange": true,
+  "userId": 1
 }
 
 --boundary
@@ -46,6 +39,7 @@ Content-Disposition: form-data; name="image"; filename="test.png"
 Content-Disposition: form-data; name="image"; filename="test2.png"
 
 < ../src/main/resources/mock/images/test2.jpg
+
 ###
-DELETE {{apiUrl}}/review/1
+DELETE {{apiUrl}}/review/2
 Authorization: {{authorizationToken}}

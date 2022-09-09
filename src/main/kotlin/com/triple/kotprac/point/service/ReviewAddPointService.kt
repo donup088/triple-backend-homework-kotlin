@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ReviewAddPointService(
-    private val pointHistoryRepository: PointHistoryRepository
+    private val pointHistoryRepository: PointHistoryRepository,
 ) {
     @Transactional
     fun update(updatedPointHistory: PointHistory): PointHistory {

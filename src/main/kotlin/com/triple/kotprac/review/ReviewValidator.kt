@@ -9,24 +9,24 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReviewValidator(
-        private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository
 ) {
-    fun createValidate(place: Place, loginUser: User) {
-        if (reviewRepository.findByPlaceIdAndUserId(place.id!!, loginUser.id!!) != null) {
+    fun createValidate(place: Place, userId: Long) {
+        if (reviewRepository.findByPlaceIdAndUserId(place.id!!, userId) != null) {
             throw AlreadyWroteReviewException()
         }
     }
 
-    fun updateValidate(originReview: Review, loginUser: User) {
-        isMineValidate(originReview, loginUser)
+    fun updateValidate(originReview: Review, loginUserId: Long) {
+        isMineValidate(originReview, loginUserId)
     }
 
     fun deleteValidate(deleteReview: Review, loginUser: User) {
-        isMineValidate(deleteReview, loginUser)
+        isMineValidate(deleteReview, loginUser.id!!)
     }
 
-    private fun isMineValidate(originReview: Review, loginUser: User) {
-        if (originReview.user.id?.equals(loginUser.id) == false) {
+    private fun isMineValidate(originReview: Review, loginUserId: Long) {
+        if (originReview.userId != loginUserId) {
             throw PermissionException()
         }
     }

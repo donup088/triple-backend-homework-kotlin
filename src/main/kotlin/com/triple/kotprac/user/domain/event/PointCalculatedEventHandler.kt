@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class PointCalculatedEventHandler(
     private val userRepository: UserRepository
 ) {
+
     @Transactional
     @EventListener
     fun handle(event: PointCalculatedEvent) {

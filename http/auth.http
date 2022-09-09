@@ -2,7 +2,7 @@ POST http://localhost:8080/login
 Content-Type: application/json;charset=UTF-8
 
 {
-  "nickname": "동그라미"
+  "nickname": "tester1"
 }
 
 > {%
