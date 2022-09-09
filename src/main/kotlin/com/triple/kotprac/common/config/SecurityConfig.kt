@@ -14,9 +14,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 class SecurityConfig(
-        private val tokenProvider: TokenProvider,
-        private val customUserDetailsService: CustomUserDetailsService,
-        private val jwtAuthEntryPoint: JwtAuthEntryPoint
+    private val tokenProvider: TokenProvider,
+    private val customUserDetailsService: CustomUserDetailsService,
+    private val jwtAuthEntryPoint: JwtAuthEntryPoint
 ) : WebSecurityConfigurerAdapter() {
     @Bean
     fun tokenAuthenticationFilter(): JwtTokenAuthenticationFilter {
@@ -25,21 +25,21 @@ class SecurityConfig(
 
     override fun configure(http: HttpSecurity?) {
         http!!.cors()
-                .and()
-                .headers().frameOptions().disable()
-                .and()
-                .httpBasic().disable()
-                .formLogin().disable()
-                .rememberMe().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/docs/**", "/user", "/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
+            .and()
+            .headers().frameOptions().disable()
+            .and()
+            .httpBasic().disable()
+            .formLogin().disable()
+            .rememberMe().disable()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/docs/**", "/user", "/login").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }
 }

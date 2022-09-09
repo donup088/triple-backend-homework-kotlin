@@ -36,7 +36,7 @@ class PointHistoryRepositoryImpl(
                 .fetchOne() ?: 0
     }
 
-    override fun isFirstReview(placeId: Long): Boolean {
+    override fun isFirstReviewByPlaceId(placeId: Long): Boolean {
         val addCount = queryFactory.select(pointHistory.count())
                 .from(pointHistory)
                 .where(pointHistory.placeId.eq(placeId)

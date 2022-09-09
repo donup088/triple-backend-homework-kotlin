@@ -8,5 +8,5 @@ interface PointHistoryRepositoryCustom {
 
     fun getPointSumByUserIdAndPlaceId(userId: Long, placeId: Long): Int
 
-    fun isFirstReview(placeId: Long): Boolean
+    fun isFirstReviewByPlaceId(placeId: Long): Boolean
 }

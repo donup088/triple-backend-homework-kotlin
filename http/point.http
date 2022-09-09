@@ -1,0 +1,13 @@
+POST {{apiUrl}}/events
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+  "type": "REVIEW",
+  "action": "ADD",
+  "reviewId": "1",
+  "content": "  1",
+  "attachedPhotoIds": [],
+  "userId": "1",
+  "placeId": "1"
+}

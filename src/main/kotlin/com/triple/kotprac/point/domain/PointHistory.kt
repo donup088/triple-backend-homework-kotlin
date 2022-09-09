@@ -34,7 +34,7 @@ class PointHistory(
         if (this.imgExist) {
             addPoint += 1
         }
-        return point
+        return addPoint
     }
 
     fun modPointCal(prePointHistory: PointHistory): Int {

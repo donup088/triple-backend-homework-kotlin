@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 internal class PlaceFinder(
-        private val placeRepository: PlaceRepository
+    private val placeRepository: PlaceRepository
 ) : Places {
     override fun getOne(placeId: Long): Place {
         return placeRepository.findByIdOrNull(placeId) ?: throw PlaceNotFoundException()
