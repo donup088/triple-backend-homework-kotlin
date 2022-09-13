@@ -21,7 +21,6 @@ class UserService(
         userRepository.save(user)
     }
 
-    @Transactional(readOnly = true)
     fun getPoint(userId: Long): UserPointResponse {
         val user = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
         return UserPointResponse.of(user)

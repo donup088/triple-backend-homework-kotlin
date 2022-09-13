@@ -20,9 +20,9 @@ class PointHistory(
     @Enumerated(EnumType.STRING)
     val action: PointHistoryAction,
 
-    var reviewId: Long,
-    var placeId: Long,
-    var userId: Long,
+    val reviewId: Long,
+    val placeId: Long,
+    val userId: Long,
 ) : BaseTimeEntity() {
     fun addPointCal(isFirstReview: Boolean): Int {
         var addPoint = 0

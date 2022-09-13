@@ -16,7 +16,6 @@ class JwtAuthEntryPoint : AuthenticationEntryPoint {
         response?.status = HttpServletResponse.SC_UNAUTHORIZED
         val errorResponse = ErrorResponse.build(HttpServletResponse.SC_UNAUTHORIZED, authException!!)
 
-
         val mapper = ObjectMapper()
         mapper.writeValue(response?.outputStream, errorResponse)
     }

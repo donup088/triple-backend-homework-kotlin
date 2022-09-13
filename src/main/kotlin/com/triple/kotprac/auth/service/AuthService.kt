@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class AuthService(
         private val users: Users,
-        private val provider:TokenProvider
+        private val provider: TokenProvider
 ) {
     fun login(request: AuthRequest): AuthResponse {
         val user = users.getOneByNickname(request.nickname)
