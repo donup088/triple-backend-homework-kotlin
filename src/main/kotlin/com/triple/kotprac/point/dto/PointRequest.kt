@@ -1,19 +1,30 @@
 package com.triple.kotprac.point.dto
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.triple.kotprac.point.domain.PointHistory
 import com.triple.kotprac.point.domain.PointHistoryAction
 import com.triple.kotprac.point.domain.PointHistoryType
 
-class PointRequest {
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type",
+    visible = true
+)
+@JsonSubTypes(value = [JsonSubTypes.Type(value = PointRequest.Update::class, name = REVIEW_VALUE)])
+sealed class PointRequest {
+    abstract val type: PointHistoryType
+
     data class Update(
-        val type: PointHistoryType,
+        override val type: PointHistoryType = PointHistoryType.REVIEW,
         val action: PointHistoryAction,
         val reviewId: Long,
         val userId: Long,
         val placeId: Long,
         val attachedPhotoIds: List<String>,
-        val content: String
-    ) {
+        val content: String,
+    ) : PointRequest() {
         fun toEntity(): PointHistory {
             return PointHistory(
                 type = type,

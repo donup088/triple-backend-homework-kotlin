@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service
 class PointService(
     private val reviewPointFactory: ReviewPointHistoryServiceFactory
 ) {
-    fun update(request: PointRequest.Update): PointHistoryResponse.OnlyId {
-        val pointHistoryRequest = request.toEntity()
+    fun update(request: PointRequest): PointHistoryResponse.OnlyId {
         when (request.type) {
-            PointHistoryType.REVIEW ->
+            PointHistoryType.REVIEW -> {
+                request as PointRequest.Update
                 return reviewPointFactory.getService(request.action)!!
-                    .update(pointHistoryRequest)
+                    .update(request.toEntity())
                     .let { pointHistory -> PointHistoryResponse.OnlyId.of(pointHistory) }
+            }
         }
     }
 }
