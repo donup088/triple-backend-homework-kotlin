@@ -12,6 +12,7 @@ class PointService(
     private val reviewModPointService: ReviewModPointService,
     private val reviewDeletePointService: ReviewDeletePointService
 ) {
+
     @Transactional
     fun update(request: PointRequest.Update): PointHistoryResponse.OnlyId {
         val pointHistoryRequest = request.toEntity()

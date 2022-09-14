@@ -35,19 +35,4 @@ class PointHistoryRepositoryImpl(
                 .where(pointHistory.id.`in`(myPointByPlaceId))
                 .fetchOne() ?: 0
     }
-
-    override fun isFirstReviewByPlaceId(placeId: Long): Boolean {
-        val addCount = queryFactory.select(pointHistory.count())
-                .from(pointHistory)
-                .where(pointHistory.placeId.eq(placeId)
-                        .and(pointHistory.action.eq(PointHistoryAction.ADD)))
-                .fetchOne()
-
-        val deleteCount = queryFactory.select(pointHistory.count())
-                .from(pointHistory)
-                .where(pointHistory.placeId.eq(placeId)
-                        .and(pointHistory.action.eq(PointHistoryAction.DELETE)))
-                .fetchOne()
-        return addCount == deleteCount
-    }
 }

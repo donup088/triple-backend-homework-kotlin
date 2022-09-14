@@ -7,6 +7,4 @@ interface PointHistoryRepositoryCustom {
     fun findByPlaceIdAndUserIdOrderByCreatedAtDesc(placeId: Long, userId: Long, pageable: Pageable): PointHistory?
 
     fun getPointSumByUserIdAndPlaceId(userId: Long, placeId: Long): Int
-
-    fun isFirstReviewByPlaceId(placeId: Long): Boolean
 }

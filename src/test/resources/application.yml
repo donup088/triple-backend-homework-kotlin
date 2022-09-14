@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: test
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://127.0.0.1:3306/triple_point?serverTimezone=Asia/Seoul&charset=UTF-8'
+    username: root
+    password: pass
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    generate-ddl: true
+
+  flyway:
+    enabled: false
+
+
+logging.level:
+  org.hibernate.SQL: debug
