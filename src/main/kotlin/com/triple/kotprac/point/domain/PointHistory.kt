@@ -11,8 +11,8 @@ class PointHistory(
     @Column(name = "point_history_id")
     val id: Long? = null,
     var point: Int = 0,
-    var contentExist: Boolean,
-    var imgExist: Boolean,
+    var contentLen: Int = 0,
+    var imgCount: Int = 0,
 
     @Enumerated(EnumType.STRING)
     val type: PointHistoryType,
@@ -29,10 +29,10 @@ class PointHistory(
         if (isFirstReview) {
             addPoint += 1
         }
-        if (this.contentExist) {
+        if (this.contentLen > 0) {
             addPoint += 1
         }
-        if (this.imgExist) {
+        if (this.imgCount > 0) {
             addPoint += 1
         }
         return addPoint
@@ -40,14 +40,14 @@ class PointHistory(
 
     fun modPointCal(prePointHistory: PointHistory): Int {
         var modPoint = 0
-        if (!prePointHistory.contentExist && this.contentExist) {
+        if ((prePointHistory.contentLen == 0) && (this.contentLen > 0)) {
             modPoint += 1
-        } else if (prePointHistory.contentExist && !this.contentExist) {
+        } else if (prePointHistory.contentLen > 0 && this.contentLen == 0) {
             modPoint -= 1
         }
-        if (!prePointHistory.imgExist && this.imgExist) {
+        if (prePointHistory.imgCount == 0 && this.imgCount > 0) {
             modPoint += 1
-        } else if (prePointHistory.imgExist && !this.imgExist) {
+        } else if (prePointHistory.imgCount > 0 && this.imgCount == 0) {
             modPoint -= 1
         }
         return modPoint
@@ -58,14 +58,14 @@ class PointHistory(
         return this
     }
 
-    fun update(contentExist: Boolean, imgExist: Boolean): PointHistory {
-        this.contentExist = contentExist
-        this.imgExist = imgExist
+    fun update(contentExist: Int, imgExist: Int): PointHistory {
+        this.contentLen = contentExist
+        this.imgCount = imgExist
         return this
     }
 
     fun delete() {
-        this.contentExist = false
-        this.imgExist = false
+        this.contentLen = 0
+        this.imgCount = 0
     }
 }

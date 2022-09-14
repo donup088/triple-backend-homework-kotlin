@@ -27,6 +27,6 @@ class ReviewModPointService(
             Events.raise(PointCalculatedEvent(updatedPointHistory.userId, point))
             return pointHistoryRepository.save(pointHistory)
         }
-        return prePointHistory.update(updatedPointHistory.contentExist, updatedPointHistory.imgExist)
+        return prePointHistory.update(updatedPointHistory.contentLen, updatedPointHistory.imgCount)
     }
 }

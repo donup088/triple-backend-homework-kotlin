@@ -9,8 +9,8 @@ CREATE TABLE `point_history`
     `type`             VARCHAR(20) NOT NULL,
     `action`           VARCHAR(20) NOT NULL,
     `point`            INT         NOT NULL,
-    `content_exist`    TINYINT(1)  NOT NULL,
-    `img_exist`        TINYINT(1)  NOT NULL,
+    `content_len`     BIGINT      NOT NULL,
+    `img_count`         INT         NOT NULL,
     `created_at`       DATETIME    NOT NULL,
     `updated_at`       DATETIME DEFAULT NULL,
     PRIMARY KEY (`point_history_id`)

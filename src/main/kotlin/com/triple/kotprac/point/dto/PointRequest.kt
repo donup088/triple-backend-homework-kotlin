@@ -19,8 +19,8 @@ class PointRequest {
                 type = type,
                 action = action,
                 userId = userId,
-                contentExist = content.trim().isNotEmpty(),
-                imgExist = attachedPhotoIds.isNotEmpty(),
+                contentLen = content.trim().length,
+                imgCount = attachedPhotoIds.size,
                 reviewId = reviewId,
                 placeId = placeId,
             )
