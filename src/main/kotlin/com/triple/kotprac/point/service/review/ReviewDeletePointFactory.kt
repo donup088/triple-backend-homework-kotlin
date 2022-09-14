@@ -1,26 +1,29 @@
-package com.triple.kotprac.point.service
+package com.triple.kotprac.point.service.review
 
 import com.triple.kotprac.common.event.Events
 import com.triple.kotprac.point.domain.PointHistory
+import com.triple.kotprac.point.domain.PointHistoryAction
 import com.triple.kotprac.point.domain.event.PointCalculatedEvent
 import com.triple.kotprac.point.domain.repository.PointHistoryRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ReviewDeletePointService(
+class ReviewDeletePointFactory(
     private val pointHistoryRepository: PointHistoryRepository
-) {
+) : ReviewPointHistoryService {
+    override fun getPointHistoryAction() = PointHistoryAction.DELETE
+
     @Transactional
-    fun update(updatedPointHistory: PointHistory): PointHistory {
+    override fun update(pointHistory: PointHistory): PointHistory {
         val point = pointHistoryRepository.getPointSumByUserIdAndPlaceId(
-            updatedPointHistory.userId,
-            updatedPointHistory.placeId
+            pointHistory.userId,
+            pointHistory.placeId
         )
-        val pointHistory = updatedPointHistory.updatePoint(-point)
-        pointHistory.delete()
+        val updatedPointHistory = pointHistory.updatePoint(-point)
+        updatedPointHistory.delete()
 
         Events.raise(PointCalculatedEvent(updatedPointHistory.userId, -point))
-        return pointHistoryRepository.save(pointHistory)
+        return pointHistoryRepository.save(updatedPointHistory)
     }
 }

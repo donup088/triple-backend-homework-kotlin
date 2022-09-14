@@ -1,25 +1,18 @@
 package com.triple.kotprac.point.service
 
-import com.triple.kotprac.point.domain.PointHistoryAction
 import com.triple.kotprac.point.dto.PointHistoryResponse
 import com.triple.kotprac.point.dto.PointRequest
+import com.triple.kotprac.point.service.review.ReviewPointHistoryServiceFactory
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PointService(
-    private val reviewAddPointService: ReviewAddPointService,
-    private val reviewModPointService: ReviewModPointService,
-    private val reviewDeletePointService: ReviewDeletePointService
+    private val reviewPointFactory: ReviewPointHistoryServiceFactory
 ) {
 
-    @Transactional
     fun update(request: PointRequest.Update): PointHistoryResponse.OnlyId {
         val pointHistoryRequest = request.toEntity()
-        return when (request.action) {
-            PointHistoryAction.ADD -> reviewAddPointService.update(pointHistoryRequest)
-            PointHistoryAction.MOD -> reviewModPointService.update(pointHistoryRequest)
-            PointHistoryAction.DELETE -> reviewDeletePointService.update(pointHistoryRequest)
-        }.let { pointHistory -> PointHistoryResponse.OnlyId.of(pointHistory) }
+        return reviewPointFactory.getService(request.action)!!.update(pointHistoryRequest)
+            .let { pointHistory -> PointHistoryResponse.OnlyId.of(pointHistory) }
     }
 }

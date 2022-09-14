@@ -1,8 +1,9 @@
-package com.triple.kotprac.point.service
+package com.triple.kotprac.point.service.review
 
 import com.triple.kotprac.common.event.Events
 import com.triple.kotprac.common.exception.pointHistory.PointHistoryNotFoundException
 import com.triple.kotprac.point.domain.PointHistory
+import com.triple.kotprac.point.domain.PointHistoryAction
 import com.triple.kotprac.point.domain.event.PointCalculatedEvent
 import com.triple.kotprac.point.domain.repository.PointHistoryRepository
 import org.springframework.data.domain.PageRequest
@@ -12,21 +13,23 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ReviewModPointService(
     private val pointHistoryRepository: PointHistoryRepository
-) {
+) : ReviewPointHistoryService {
+    override fun getPointHistoryAction() = PointHistoryAction.MOD
+
     @Transactional
-    fun update(updatedPointHistory: PointHistory): PointHistory {
+    override fun update(pointHistory: PointHistory): PointHistory {
         val prePointHistory =
             pointHistoryRepository.findByPlaceIdAndUserIdOrderByCreatedAtDesc(
-                updatedPointHistory.placeId,
-                updatedPointHistory.userId,
+                pointHistory.placeId,
+                pointHistory.userId,
                 PageRequest.of(0, 1)
             ) ?: throw PointHistoryNotFoundException()
-        val point = updatedPointHistory.modPointCal(prePointHistory)
+        val point = pointHistory.modPointCal(prePointHistory)
         if (point != 0) {
-            val pointHistory = updatedPointHistory.updatePoint(point)
+            val updatedPointHistory = pointHistory.updatePoint(point)
             Events.raise(PointCalculatedEvent(updatedPointHistory.userId, point))
-            return pointHistoryRepository.save(pointHistory)
+            return pointHistoryRepository.save(updatedPointHistory)
         }
-        return prePointHistory.update(updatedPointHistory.contentLen, updatedPointHistory.imgCount)
+        return prePointHistory.update(pointHistory.contentLen, pointHistory.imgCount)
     }
 }
