@@ -7,40 +7,56 @@ import com.triple.kotprac.point.service.PointService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.annotation.Rollback
+import org.springframework.test.context.ActiveProfiles
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 
 
 @SpringBootTest
+@ActiveProfiles("local")
 class PointReviewLockTest(
     @Autowired private val pointService: PointService
 ) {
 
     @Test
-    @Rollback(value = false)
     fun test() {
         val numberOfThreads = 3
         val latch = CountDownLatch(numberOfThreads)
         val executorService = Executors.newFixedThreadPool(numberOfThreads)
 
         for (i in 0 until numberOfThreads) {
+            println(i)
+            val request =
+                PointRequest.Update(
+                    PointHistoryType.REVIEW,
+                    PointHistoryAction.ADD,
+                    i.toLong() + 1,
+                    i.toLong() + 1,
+                    120,
+                    listOf(),
+                    "good"
+                )
             executorService.execute {
-                val request =
-                    PointRequest.Update(
-                        PointHistoryType.REVIEW,
-                        PointHistoryAction.ADD,
-                        i.toLong() + 1,
-                        i.toLong() + 1,
-                        1,
-                        listOf(),
-                        "good"
-                    )
                 pointService.update(request)
                 latch.countDown()
             }
         }
+        latch.await()
+        println("end")
+    }
 
-        Thread.sleep(500)
+    @Test
+    fun test2() {
+        val request =
+            PointRequest.Update(
+                PointHistoryType.REVIEW,
+                PointHistoryAction.ADD,
+                3,
+                2,
+                5,
+                listOf(),
+                "good"
+            )
+        pointService.update(request)
     }
 }

@@ -1,29 +1,33 @@
 package com.triple.kotprac.point.service
 
 import com.triple.kotprac.point.domain.PointHistory
-import com.triple.kotprac.point.domain.PointPlace
-import com.triple.kotprac.point.domain.repository.PointPlaceRepository
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PointPlaceService(
-    private val pointPlaceRepository: PointPlaceRepository
+//    private val pointPlaceRepository: PointPlaceRepository,
+    private val redisTemplate: RedisTemplate<String, String>
 ) {
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+
+    @Transactional
     fun createAndReturnIsFirstReview(pointHistory: PointHistory): Boolean {
-        return try {
-            val findPointPlace = pointPlaceRepository.findByPlaceId(pointHistory.placeId)
-            if (findPointPlace == null) {
-                pointPlaceRepository.save(PointPlace.create(pointHistory.reviewId, pointHistory.placeId))
-                true
-            } else {
-                false
-            }
-        } catch (e: DataIntegrityViolationException) {
-            throw e
+        val firstReview = redisTemplate.opsForValue().get(pointHistory.placeId.toString())
+        return if (firstReview == null) {
+            redisTemplate.opsForValue().append(pointHistory.placeId.toString(), pointHistory.reviewId.toString())
+            println("성공")
+            true
+        } else {
+            println("겹침")
+            false
         }
+//        val findPointPlace = pointPlaceRepository.findByPlaceId(pointHistory.placeId)
+//        return if (findPointPlace == null) {
+//            pointPlaceRepository.save(PointPlace.create(pointHistory.reviewId, pointHistory.placeId))
+//            true
+//        } else {
+//            false
+//        }
     }
 }

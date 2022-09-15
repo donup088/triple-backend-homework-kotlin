@@ -8,10 +8,6 @@ spring:
     username: root
     password: pass
 
-  h2:
-    console:
-      enabled: true
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,6 +15,10 @@ spring:
       hibernate:
         format_sql: true
     generate-ddl: true
+    open-in-view: false
+  redis:
+    host: localhost
+    port: 6379
 
   flyway:
     enabled: false
