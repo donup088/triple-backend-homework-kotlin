@@ -3,6 +3,7 @@ package com.triple.kotprac.point.service.review
 import com.triple.kotprac.common.event.Events
 import com.triple.kotprac.point.domain.PointHistory
 import com.triple.kotprac.point.domain.PointHistoryAction
+import com.triple.kotprac.point.domain.pointpolicy.ReviewAddPointPolicy
 import com.triple.kotprac.point.domain.event.PointCalculatedEvent
 import com.triple.kotprac.point.domain.repository.PointHistoryRepository
 import com.triple.kotprac.point.service.PointPlaceService
@@ -25,7 +26,7 @@ class ReviewAddPointService(
         } catch (e: DataIntegrityViolationException) {
             false
         }
-        val point = pointHistory.addPointCal(isFirstReview)
+        val point = pointHistory.calPoint(ReviewAddPointPolicy(isFirstReview))
         val updatedPointHistory = pointHistory.updatePoint(point)
         Events.raise(PointCalculatedEvent(updatedPointHistory.userId, point))
         return pointHistoryRepository.save(updatedPointHistory)

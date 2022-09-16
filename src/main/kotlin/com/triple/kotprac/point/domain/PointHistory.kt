@@ -1,7 +1,9 @@
 package com.triple.kotprac.point.domain
 
 import com.triple.kotprac.common.entity.BaseTimeEntity
+import com.triple.kotprac.point.domain.pointpolicy.PointCalPolicy
 import javax.persistence.*
+import kotlin.jvm.Transient
 
 @Entity
 @Table(name = "point_history")
@@ -23,34 +25,17 @@ class PointHistory(
     val reviewId: Long,
     val placeId: Long,
     val userId: Long,
+    @Transient
+    var pointCalPolicy: PointCalPolicy? = null
 ) : BaseTimeEntity() {
-    fun addPointCal(isFirstReview: Boolean): Int {
-        var addPoint = 0
-        if (isFirstReview) {
-            addPoint += 1
-        }
-        if (this.contentLen > 0) {
-            addPoint += 1
-        }
-        if (this.imgCount > 0) {
-            addPoint += 1
-        }
-        return addPoint
-    }
+    val contentExist
+        get() = this.contentLen > 0
+    val imgExist
+        get() = this.imgCount > 0
 
-    fun modPointCal(prePointHistory: PointHistory): Int {
-        var modPoint = 0
-        if ((prePointHistory.contentLen == 0) && (this.contentLen > 0)) {
-            modPoint += 1
-        } else if (prePointHistory.contentLen > 0 && this.contentLen == 0) {
-            modPoint -= 1
-        }
-        if (prePointHistory.imgCount == 0 && this.imgCount > 0) {
-            modPoint += 1
-        } else if (prePointHistory.imgCount > 0 && this.imgCount == 0) {
-            modPoint -= 1
-        }
-        return modPoint
+    fun calPoint(pointCalPolicy: PointCalPolicy): Int {
+        this.pointCalPolicy = pointCalPolicy
+        return pointCalPolicy.calculate(this)
     }
 
     fun updatePoint(point: Int): PointHistory {

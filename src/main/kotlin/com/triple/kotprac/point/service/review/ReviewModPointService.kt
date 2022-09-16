@@ -4,6 +4,7 @@ import com.triple.kotprac.common.event.Events
 import com.triple.kotprac.common.exception.pointHistory.PointHistoryNotFoundException
 import com.triple.kotprac.point.domain.PointHistory
 import com.triple.kotprac.point.domain.PointHistoryAction
+import com.triple.kotprac.point.domain.pointpolicy.ReviewModPointPolicy
 import com.triple.kotprac.point.domain.event.PointCalculatedEvent
 import com.triple.kotprac.point.domain.repository.PointHistoryRepository
 import org.springframework.data.domain.PageRequest
@@ -24,7 +25,7 @@ class ReviewModPointService(
                 pointHistory.userId,
                 PageRequest.of(0, 1)
             ) ?: throw PointHistoryNotFoundException()
-        val point = pointHistory.modPointCal(prePointHistory)
+        val point = pointHistory.calPoint(ReviewModPointPolicy(prePointHistory))
         if (point != 0) {
             val updatedPointHistory = pointHistory.updatePoint(point)
             Events.raise(PointCalculatedEvent(updatedPointHistory.userId, point))
