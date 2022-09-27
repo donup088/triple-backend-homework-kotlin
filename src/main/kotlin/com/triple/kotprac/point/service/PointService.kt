@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class PointService(
     private val reviewPointFactory: ReviewPointHistoryServiceFactory,
 ) {
-    fun handle(request: PointRequest)=
+    fun handleEvent(request: PointRequest)=
         when (request) {
             is PointRequest.Review -> reviewPointFactory.getService(request)
                 .update(request.toEntity())
