@@ -12,11 +12,15 @@ import com.triple.kotprac.point.domain.PointHistoryType
     property = "type",
     visible = true
 )
-@JsonSubTypes(value = [JsonSubTypes.Type(value = PointRequest.Update::class, name = REVIEW_VALUE)])
+@JsonSubTypes(
+    value = [
+        JsonSubTypes.Type(value = PointRequest.Review::class, name = REVIEW_VALUE),
+    ]
+)
 sealed class PointRequest {
     abstract val type: PointHistoryType
 
-    data class Update(
+    data class Review(
         override val type: PointHistoryType = PointHistoryType.REVIEW,
         val action: PointHistoryAction,
         val reviewId: Long,

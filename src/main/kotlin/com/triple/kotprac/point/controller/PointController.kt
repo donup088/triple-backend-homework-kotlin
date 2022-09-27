@@ -16,7 +16,7 @@ class PointController(
 ) {
     @PostMapping("/events")
     fun update(@RequestBody request: PointRequest): ResponseEntity<ApiResult<PointHistoryResponse.OnlyId>> {
-        val response = pointService.update(request)
+        val response = pointService.handle(request)
         return ResponseEntity.ok().body(ApiResult.build(HttpStatus.OK.value(), response))
     }
 }

@@ -4,7 +4,7 @@ CREATE TABLE `point_place`
 (
     `point_place_id`  BIGINT   NOT NULL AUTO_INCREMENT,
     `place_id`        BIGINT   NOT NULL UNIQUE,
-    `first_review_id` BIGINT   NOT NULL,
+    `first_review_id`  BIGINT   NOT NULL,
     `created_at`      DATETIME NOT NULL,
     `updated_at`      DATETIME DEFAULT NULL,
     PRIMARY KEY (`point_place_id`)
