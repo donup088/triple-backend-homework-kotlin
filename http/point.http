@@ -4,8 +4,8 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "type": "REVIEW",
-  "action": "DELETE",
-  "reviewId": "1",
+  "action": "ADD",
+  "reviewId": "2",
   "content": "123",
   "attachedPhotoIds": [1],
   "userId": "1",

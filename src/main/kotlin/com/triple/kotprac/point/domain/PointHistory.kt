@@ -25,8 +25,6 @@ class PointHistory(
     val reviewId: Long,
     val placeId: Long,
     val userId: Long,
-    @Transient
-    var pointCalPolicy: PointCalPolicy? = null
 ) : BaseTimeEntity() {
     val contentExist
         get() = this.contentLen > 0
@@ -34,7 +32,6 @@ class PointHistory(
         get() = this.imgCount > 0
 
     fun calPoint(pointCalPolicy: PointCalPolicy): Int {
-        this.pointCalPolicy = pointCalPolicy
         return pointCalPolicy.calculate(this)
     }
 
