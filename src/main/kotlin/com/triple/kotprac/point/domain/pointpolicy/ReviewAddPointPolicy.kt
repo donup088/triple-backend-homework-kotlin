@@ -5,13 +5,6 @@ import com.triple.kotprac.point.domain.PointHistory
 class ReviewAddPointPolicy(
     private val isFirstReview: Boolean,
 ) : ReviewPointPolicy() {
-    companion object {
-        private const val ZERO = 0
-        private const val CONTENT_POINT = 1
-        private const val IMAGE_POINT = 1
-        private const val FIRST_REVIEW_POINT = 1
-    }
-
     override fun calculatePoint(pointHistory: PointHistory) =
         firstReviewCal(isFirstReview) + contentCal(pointHistory) + imgCal(pointHistory)
 
@@ -35,4 +28,11 @@ class ReviewAddPointPolicy(
         } else {
             ZERO
         }
+
+    companion object {
+        private const val ZERO = 0
+        private const val CONTENT_POINT = 1
+        private const val IMAGE_POINT = 1
+        private const val FIRST_REVIEW_POINT = 1
+    }
 }

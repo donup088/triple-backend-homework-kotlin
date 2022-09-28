@@ -3,7 +3,6 @@ package com.triple.kotprac.point.domain
 import com.triple.kotprac.common.entity.BaseTimeEntity
 import com.triple.kotprac.point.domain.pointpolicy.PointCalPolicy
 import javax.persistence.*
-import kotlin.jvm.Transient
 
 @Entity
 @Table(name = "point_history")
@@ -31,23 +30,8 @@ class PointHistory(
     val imgExist
         get() = this.imgCount > 0
 
-    fun calPoint(pointCalPolicy: PointCalPolicy): Int {
-        return pointCalPolicy.calculate(this)
-    }
-
-    fun updatePoint(point: Int): PointHistory {
-        this.point = point
+    fun calPoint(pointCalPolicy: PointCalPolicy): PointHistory {
+        this.point=pointCalPolicy.calculate(this)
         return this
-    }
-
-    fun update(contentExist: Int, imgExist: Int): PointHistory {
-        this.contentLen = contentExist
-        this.imgCount = imgExist
-        return this
-    }
-
-    fun delete() {
-        this.contentLen = 0
-        this.imgCount = 0
     }
 }

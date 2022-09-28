@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReviewPointHistoryServiceFactory(
-    private val reviewPointHistoryServices: List<ReviewPointHistoryService>
+    private val calculators: List<ReviewPointHistoryCalculator>
 ) {
     fun getService(request: PointRequest.Review) =
-        reviewPointHistoryServices.find { it.getPointHistoryAction() == request.action }
+        calculators.find { it.getPointHistoryAction() == request.action }
             ?: throw IllegalArgumentException()
 }

@@ -5,14 +5,6 @@ import com.triple.kotprac.point.domain.PointHistory
 class ReviewModPointPolicy(
     private val prePointHistory: PointHistory
 ) : ReviewPointPolicy() {
-    companion object {
-        private const val ZERO = 0
-        private const val PLUS_CONTENT_POINT = 1
-        private const val PLUS_IMAGE_POINT = 1
-        private const val MINUS_CONTENT_POINT = -1
-        private const val MINUS_IMAGE_POINT = -1
-    }
-
     override fun calculatePoint(pointHistory: PointHistory) =
         contentCal(pointHistory) + imgCal(pointHistory)
 
@@ -29,4 +21,12 @@ class ReviewModPointPolicy(
         else if (prePointHistory.imgExist && !updatedPointHistory.imgExist)
             MINUS_IMAGE_POINT
         else ZERO
+
+    companion object {
+        private const val ZERO = 0
+        private const val PLUS_CONTENT_POINT = 1
+        private const val PLUS_IMAGE_POINT = 1
+        private const val MINUS_CONTENT_POINT = -1
+        private const val MINUS_IMAGE_POINT = -1
+    }
 }
