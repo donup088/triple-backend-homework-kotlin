@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ReviewDeletePointCalculator(
+class ReviewDeletePointService(
     private val pointHistoryRepository: PointHistoryRepository
-) : ReviewPointHistoryCalculator {
+) : ReviewPointHistoryService {
     override fun getPointHistoryAction() = PointHistoryAction.DELETE
 
     @Transactional
-    override fun calculatePoint(pointHistory: PointHistory): PointHistory {
+    override fun createPointHistory(pointHistory: PointHistory): PointHistory {
         val pointByUserGetFromPlace = pointHistoryRepository.getPointSumByUserIdAndPlaceId(
             pointHistory.userId,
             pointHistory.placeId

@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ReviewAddPointCalculator(
+class ReviewAddPointService(
     private val pointPlaceService: PointPlaceService
-) : ReviewPointHistoryCalculator {
+) : ReviewPointHistoryService {
     override fun getPointHistoryAction() = PointHistoryAction.ADD
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    override fun calculatePoint(pointHistory: PointHistory): PointHistory {
+    override fun createPointHistory(pointHistory: PointHistory): PointHistory {
         val isFirstReview: Boolean = try {
             pointPlaceService.createAndReturnIsFirstReview(pointHistory)
         } catch (e: DataIntegrityViolationException) {

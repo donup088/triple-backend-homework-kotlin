@@ -16,7 +16,7 @@ class PointService(
     fun handleEvent(request: PointRequest): PointHistoryResponse.OnlyId {
         val pointHistory = when (request) {
             is PointRequest.Review -> reviewPointFactory.getService(request)
-                .calculatePoint(request.toEntity())
+                .createPointHistory(request.toEntity())
         }
         Events.raise(PointCalculatedEvent(pointHistory.userId, pointHistory.point))
         return pointHistoryRepository.save(pointHistory).let { PointHistoryResponse.OnlyId.of(it) }

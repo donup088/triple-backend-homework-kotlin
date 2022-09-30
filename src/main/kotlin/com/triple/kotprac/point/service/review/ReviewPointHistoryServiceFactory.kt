@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReviewPointHistoryServiceFactory(
-    private val calculators: List<ReviewPointHistoryCalculator>
+    private val calculators: List<ReviewPointHistoryService>
 ) {
     fun getService(request: PointRequest.Review) =
         calculators.find { it.getPointHistoryAction() == request.action }

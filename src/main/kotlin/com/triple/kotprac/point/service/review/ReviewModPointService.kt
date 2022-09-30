@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ReviewModPointCalculator(
+class ReviewModPointService(
     private val pointHistoryRepository: PointHistoryRepository
-) : ReviewPointHistoryCalculator {
+) : ReviewPointHistoryService {
     override fun getPointHistoryAction() = PointHistoryAction.MOD
 
     @Transactional
-    override fun calculatePoint(pointHistory: PointHistory): PointHistory {
+    override fun createPointHistory(pointHistory: PointHistory): PointHistory {
         val prePointHistory =
             pointHistoryRepository.findByPlaceIdAndUserIdOrderByCreatedAtDesc(
                 pointHistory.placeId,
